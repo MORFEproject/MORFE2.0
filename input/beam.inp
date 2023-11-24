@@ -1,0 +1,162 @@
+beam.txt
+
+*Analysis
+Type,general
+**
+
+
+*Lelset,name=volume
+1
+**
+
+*Solid Section
+Lelset,volume
+Material,Silicon
+**
+
+*Lelset,name=drive_lasco
+1
+**
+
+*Lelset,name=drive_fine
+4
+5
+**
+
+
+*Lelset,name=statore_lasco
+3
+2
+**
+
+*Lelset,name=statore_fine
+1
+**
+
+
+
+*Lelset,name=incastro
+1
+6
+**
+
+
+
+*Boundary
+Lelset,incastro
+Dir,1,3
+Val,0.
+**
+
+
+*Material, type=isotropic, name=Silicon
+Density, 2.3300000000000d-03
+Elastic, 167000.00,0.22
+Thermal, 3.02946227675333d-06
+Conduct, 144.905172342894
+Heatcap, 708.855360573726
+Tref, 298.15
+**
+
+*Temperature,active=0
+DT,   0
+**
+
+#INCORE & OOC: (1) -> incore o (2) -> out of core 
+#numero threads della cpu (virtuali inclusi)
+
+*Pardiso 
+icore_ooc, 1
+threads, 6
+**
+
+*Arpack,active=1
+shift, 0
+maxnev, 20
+maxncv, 30
+nev, 15
+ncv, 28
+tol, 0.d0
+**
+
+*Thermoel,active=0
+
+**
+
+*Electro,active=0
+beam.dat,mode=1
+beam.dat,mode=1
+symmetry,0,0
+shuttle,drive_fine,solid=2,ndiv=1        // shuttle diventa set num 1
+shuttle,drive_lasco,solid=2,ndiv=1
+stator1,statore_lasco,ndiv=1        // shuttle diventa set num 1
+stator1,statore_fine,ndiv=1        // shuttle diventa set num 1
+**
+
+
+*ElectrM,active=0
+comb_gyro.dat,mode=1
+comb_gyro.dat,mode=2
+comb_gyro.dat,mode=3
+comb_gyro.dat,mode=4
+comb_gyro.dat,mode=5
+comb_gyro.dat,mode=6
+symmetry,0,10
+shuttle,dr_ti_bo,solid=3,ndiv=4
+shuttle,dr_to_do,solid=3,ndiv=2
+shuttle,dr_side,solid=3,ndiv=2
+stator2,dr_c,solid=3,ndiv=1
+stator1,st_f_face,solid=1,ndiv=2
+stator1,st_f_to_do,solid=1,ndiv=2
+stator1,st_f_ti_bo,solid=1,ndiv=4
+stator1,st_c,solid=1,ndiv=1
+**
+
+
+
+*MRigid,active=0
+tetainp, 0.1
+**
+
+
+
+
+*NLstiffness,active=0
+node, 3593
+dir,2
+**
+
+*NLst_radial,active=0
+mode1,1
+mode2,3
+node1,3593
+node2,3593
+dir1,2
+dir2,2
+**
+
+
+
+
+*NLstiff2mode,active=0
+mode1,1
+node1,1530
+dir1,0,1,0
+mode2,4
+node2,109
+dir2,0,1,0
+**
+
+
+
+*2pDynamics,active=0
+node1,32833
+node2,16078
+mode1,1
+mode2,3
+dir1,2
+dir2,2
+**
+
+
+*Endfile
