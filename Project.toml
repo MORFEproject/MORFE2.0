@@ -1,0 +1,7 @@
+[deps]
+Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
+Arpack_jll = "68821587-b530-5797-8361-c406ea357684"
+Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+ExtendableSparse = "95c220a8-a1cf-11e9-0c77-dbfce5f500b3"
+FEMQuad = "be8e8821-3f6f-54c2-987c-d2773c3a52cb"
+MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
