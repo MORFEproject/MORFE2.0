@@ -1,5 +1,5 @@
 function count_terms_dyn(Cp::Vector{Parametrisation},info::Infostruct)
-    # conto quanti sono
+    # Routine that evaluates how many terms are present
     howmany=0
     for p in 1:info.max_order   # for every order
         for i in 1:Cp[p].nc # for every alpha vector
@@ -69,23 +69,23 @@ for p in 1:info.max_order   # for every order
   end
 end
 
-# mi segno le mappe
-# mi sergno il numero di dofs
+# I write the mappings
+# I also save the number of dofs
 index=1
   for p in 1:info.max_order   # for every order
     for i in 1:Cp[p].nc # for every alpha vector
       #corresp=Cp[p].corresp[i] # that is resonant or under the given order
       #if corresp!=0
-        for inode=1:mesh.nn # loop nei nodi
-            for idof=1:3 # lop nei dof
-              dof=U.dof[(inode-1)*3+idof]# estraggo il dof
-              if dof>0 # check se dof è positivo
+        for inode=1:mesh.nn # loop over the nodes
+            for idof=1:3 # loop over the dof
+              dof=U.dof[(inode-1)*3+idof]# dof extraction
+              if dof>0 # the dof is active?
                 mappings[index,inode,idof]=real(Cp[p].Wr[dof,i])
                 mappings_vel[index,inode,idof]=real(Cp[p].Wr[info.nK+dof,i])
               end
             end
         end
-        for imode=1:info.neig # loop nei modi
+        for imode=1:info.neig # loop over the modes
           #println(size(ϕ[:,imode]))
           #println(size(M))
           #println(size(real.(Cp[p].Wr[:,i])))
@@ -107,7 +107,7 @@ function export_maps(mappings::Array{Float64},Avector::Matrix{Float64},info::Inf
 
     ofile = info.output_dir*"/mappings.vtk"
     #
-    # scrivo la parte iniziale
+    # Header of the file
     io = open(ofile,"w")
     write(io,"# vtk DataFile Version 3.0\n")
     write(io,"eigenfunctions\n")
@@ -162,7 +162,7 @@ function export_maps(mappings::Array{Float64},Avector::Matrix{Float64},info::Inf
     write(io,"\n")
     write(io,"POINT_DATA "*string(mesh.nn)*"\n")
   
-    # parto con le mappe calibrate sugli alpha vector
+    # here start the mappings with the alpha vector approach
     for imaps=1:howmany
       write(io,"VECTORS mapping_"*replace(string(Int.(Avector[imaps,:])),", "=>"_")[2:end-1]*" float\n")
       for i = 1:mesh.nn

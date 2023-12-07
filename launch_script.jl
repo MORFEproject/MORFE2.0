@@ -109,13 +109,9 @@ info.nMat=info.nA+info.nz  # dim of system to be solved
 #  OUTPUT ON FILE
 ##################################################
 
-##################################################
-#  OUTPUT ON FILE
-##################################################
+# I write daown in a compact way the output
 
-# qui lo scrivo in modo compatto
-
-# mi segno gli alfa vector
+# Alfa vector preparation
 
 @time howmany=count_terms_dyn(Cp,info)
 @time mappings,mappings_vel,mappings_modal,mappings_modal_vel,Avector,fdyn=store_dyn_and_map(Cp,info,howmany)
